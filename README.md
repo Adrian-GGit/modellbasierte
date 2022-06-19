@@ -1,1 +1,2 @@
-# modellbasierte
+Usage:
+go run .
