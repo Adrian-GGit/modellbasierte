@@ -1,0 +1,28 @@
+Statements Syntax für Imp:
+while
+if...else...
+print
+
+Expressions Syntax für Imp:
++
+*
+||
+&&
+!
+==
+<
+:=
+=
+
+Bereits in go:
+(...)
+;
+
+Statements to implement:
+while
+if...else...
+
+Expressions to implement:
+!
+==
+<

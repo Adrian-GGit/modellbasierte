@@ -12,12 +12,6 @@ func boolean(x bool) Exp {
 
 func plus(x, y Exp) Exp {
 	return (Plus)([2]Exp{x, y})
-
-	// The type Plus is defined as the two element array consisting of Exp elements.
-	// Plus and [2]Exp are isomorphic but different types.
-	// We first build the AST value [2]Exp{x,y}.
-	// Then cast this value (of type [2]Exp) into a value of type Plus.
-
 }
 
 func mult(x, y Exp) Exp {

@@ -52,15 +52,14 @@ type Decl struct {
 	lhs string
 	rhs Exp
 }
+type Assign struct {
+	lhs string
+	rhs Exp
+}
 type IfThenElse struct {
 	cond     Exp
 	thenStmt Stmt
 	elseStmt Stmt
-}
-
-type Assign struct {
-	lhs string
-	rhs Exp
 }
 
 // Expression cases (incomplete)
