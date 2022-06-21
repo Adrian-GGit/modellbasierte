@@ -25,3 +25,15 @@ func and(x, y Exp) Exp {
 func or(x, y Exp) Exp {
 	return (Or)([2]Exp{x, y})
 }
+
+func neg(x Exp) Exp {
+	return (Neg)([1]Exp{x})
+}
+
+func equal(x, y Exp) Exp {
+	return (Equal)([2]Exp{x, y})
+}
+
+func less(x, y Exp) Exp {
+	return (Less)([2]Exp{x, y})
+}

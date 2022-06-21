@@ -8,7 +8,10 @@ func main() {
 
 	fmt.Printf("\n")
 
-	ex1()
-	ex2()
-	ex3()
+	test_plus_mult()
+	test_and()
+	test_or()
+	test_negation()
+	test_equal()
+	test_less()
 }

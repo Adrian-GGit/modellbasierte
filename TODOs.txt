@@ -20,7 +20,7 @@ Bereits in go:
 
 Statements to implement:
 while
-if...else...
+print???
 
 Expressions to implement:
 !

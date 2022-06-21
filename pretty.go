@@ -84,3 +84,38 @@ func (e Or) pretty() string {
 
 	return x
 }
+
+func (e Neg) pretty() string {
+
+	var x string
+	x = "("
+	x += "!"
+	x += e[0].pretty()
+	x += ")"
+
+	return x
+}
+
+func (e Equal) pretty() string {
+
+	var x string
+	x = "("
+	x += e[0].pretty()
+	x += "=="
+	x += e[1].pretty()
+	x += ")"
+
+	return x
+}
+
+func (e Less) pretty() string {
+
+	var x string
+	x = "("
+	x += e[0].pretty()
+	x += "<"
+	x += e[1].pretty()
+	x += ")"
+
+	return x
+}

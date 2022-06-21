@@ -84,3 +84,34 @@ func (e Or) eval(s ValState) Val {
 	}
 	return mkUndefined()
 }
+
+func (e Neg) eval(s ValState) Val {
+	b1 := e[0].eval(s)
+	if b1.flag == ValueBool {
+		return mkBool(!b1.valB)
+	}
+	return mkUndefined()
+}
+
+// TODO: maybe implement equality between int and bool => 0 und false sind äquivalent und 1 und true sind äquivalent
+// => definiert ist auf den Folien equal durch zwei Expressions beliebigen types
+func (e Equal) eval(s ValState) Val {
+	nb1 := e[0].eval(s)
+	nb2 := e[1].eval(s)
+	switch {
+	case nb1.flag == ValueInt && nb2.flag == ValueInt:
+		return mkBool(nb1.valI == nb2.valI)
+	case nb1.flag == ValueBool && nb2.flag == ValueBool:
+		return mkBool(nb1.valB == nb2.valB)
+	}
+	return mkUndefined()
+}
+
+func (e Less) eval(s ValState) Val {
+	n1 := e[0].eval(s)
+	n2 := e[1].eval(s)
+	if n1.flag == ValueInt && n2.flag == ValueInt {
+		return mkBool(n1.valI < n2.valI)
+	}
+	return mkUndefined()
+}

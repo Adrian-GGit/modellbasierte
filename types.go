@@ -28,7 +28,7 @@ func showType(t Type) string {
 // Value State is a mapping from variable names to values
 type ValState map[string]Val
 
-// Value State is a mapping from variable names to types
+// Type State is a mapping from variable names to types
 type TyState map[string]Type
 
 // Interface
@@ -62,6 +62,10 @@ type IfThenElse struct {
 	elseStmt Stmt
 }
 
+// TODO: implement while statement
+
+// TODO: implement print statement
+
 // Expression cases (incomplete)
 
 type Bool bool
@@ -71,6 +75,11 @@ type Plus [2]Exp
 type And [2]Exp
 type Or [2]Exp
 type Var string
+type Neg [1]Exp
+type Equal [2]Exp
+type Less [2]Exp
+
+// TODO: maybe implement grouping (...) as expression
 
 // Examples
 
