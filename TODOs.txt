@@ -26,3 +26,11 @@ Expressions to implement:
 !
 ==
 <
+
+-----------------------------------------
+Current TODOs:
+- Add tests for
+    - ifthenelse
+    - while
+    - print
+- Implementation of print EVAL
