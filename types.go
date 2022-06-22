@@ -114,7 +114,7 @@ func test_expressions(e Exp, expected_val Val, expected_type Type) bool {
 	}
 }
 
-func test_stmt(stmt Stmt, expected_vals ValState, expected_types TyState) bool {
+func test_stmt(stmt Stmt, expected_vals ValState, expected_types TyState, allow_check_fail bool) bool {
 	val_states := make(ValState)
 	type_states := make(TyState)
 	fmt.Printf("\n---------- New STMT test case ----------")
@@ -125,6 +125,13 @@ func test_stmt(stmt Stmt, expected_vals ValState, expected_types TyState) bool {
 		fmt.Printf("\n[*] Typecheck SUCCESS")
 	} else {
 		fmt.Printf("\n[*] Typecheck FAIL")
+	}
+	if allow_check_fail && !type_check {
+		fmt.Printf("- but was allowed to FAIL")
+		type_check = true
+	} else if allow_check_fail && type_check {
+		fmt.Printf("- but shouldve FAIL")
+		type_check = false
 	}
 	compare_val_states := reflect.DeepEqual(val_states, expected_vals)
 	compare_type_states := reflect.DeepEqual(type_states, expected_types)

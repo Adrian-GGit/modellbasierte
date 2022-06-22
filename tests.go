@@ -5,7 +5,6 @@ import "fmt"
 func test_all() {
 	overall_success := true
 
-	// Expression tests
 	overall_success = overall_success && test_plus_mult()
 	overall_success = overall_success && test_and()
 	overall_success = overall_success && test_or()
@@ -13,8 +12,8 @@ func test_all() {
 	overall_success = overall_success && test_equal()
 	overall_success = overall_success && test_less()
 
-	// Statement tests
 	overall_success = overall_success && test_decl()
+	overall_success = overall_success && test_assign()
 
 	if overall_success {
 		fmt.Printf("\n=====> [*] Overall overall test SUCCESS")
@@ -132,9 +131,25 @@ func test_less() bool {
 func test_decl() bool {
 	overall_success := true
 	assign_stmt := decl("x", boolean(false))
-	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueBool, 0, false}}, TyState{"x": TyBool})
+	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueBool, 0, false}}, TyState{"x": TyBool}, false)
 	assign_stmt = decl("x", number(3))
-	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueInt, 3, false}}, TyState{"x": TyInt})
+	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueInt, 3, false}}, TyState{"x": TyInt}, false)
+	if overall_success {
+		fmt.Printf("\n===> [*] Overall test SUCCESS")
+	} else {
+		fmt.Printf("\n===> [*] Overall test FAIL")
+	}
+	return overall_success
+}
+
+func test_assign() bool {
+	overall_success := true
+	assign_stmt := seq(decl("x", boolean(false)), assign("x", boolean(true)))
+	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueBool, 0, true}}, TyState{"x": TyBool}, false)
+	assign_stmt = seq(decl("x", boolean(false)), assign("x", number(3)))
+	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueBool, 0, false}}, TyState{"x": TyBool}, true)
+	assign_stmt = assign("x", boolean(true))
+	overall_success = overall_success && test_stmt(assign_stmt, ValState{}, TyState{}, true)
 	if overall_success {
 		fmt.Printf("\n===> [*] Overall test SUCCESS")
 	} else {

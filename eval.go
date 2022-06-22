@@ -16,7 +16,11 @@ func (decl Decl) eval(s ValState) {
 func (assign Assign) eval(s ValState) {
 	v := assign.rhs.eval(s)
 	x := (string)(assign.lhs)
-	s[x] = v
+	if s[x].flag == v.flag {
+		s[x] = v
+	} else {
+		fmt.Printf("\nassign fail")
+	}
 }
 
 func (ifthenelse IfThenElse) eval(s ValState) {
@@ -29,7 +33,7 @@ func (ifthenelse IfThenElse) eval(s ValState) {
 			ifthenelse.elseStmt.eval(s)
 		}
 	} else {
-		fmt.Printf("if-then-else eval fail")
+		fmt.Printf("\nif-then-else eval fail")
 	}
 }
 
@@ -41,7 +45,7 @@ func (while While) eval(s ValState) {
 			while.eval(s)
 		}
 	} else {
-		fmt.Printf("while eval fail")
+		fmt.Printf("\nwhile eval fail")
 	}
 }
 
