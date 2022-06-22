@@ -2,35 +2,50 @@ package main
 
 import "fmt"
 
-// Maps are represented via points.
-// Hence, maps are passed by "reference" and the update is visible for the caller as well.
+func (stmt Seq) eval(s ValState) {
+	stmt[0].eval(s)
+	stmt[1].eval(s)
+}
+
 func (decl Decl) eval(s ValState) {
 	v := decl.rhs.eval(s)
 	x := (string)(decl.lhs)
 	s[x] = v
 }
 
-// eval
-
-func (stmt Seq) eval(s ValState) {
-	stmt[0].eval(s)
-	stmt[1].eval(s)
+func (assign Assign) eval(s ValState) {
+	v := assign.rhs.eval(s)
+	x := (string)(assign.lhs)
+	s[x] = v
 }
 
-func (ite IfThenElse) eval(s ValState) {
-	v := ite.cond.eval(s)
+func (ifthenelse IfThenElse) eval(s ValState) {
+	v := ifthenelse.cond.eval(s)
 	if v.flag == ValueBool {
 		switch {
 		case v.valB:
-			ite.thenStmt.eval(s)
+			ifthenelse.thenStmt.eval(s)
 		case !v.valB:
-			ite.elseStmt.eval(s)
+			ifthenelse.elseStmt.eval(s)
 		}
-
 	} else {
 		fmt.Printf("if-then-else eval fail")
 	}
+}
 
+func (while While) eval(s ValState) {
+	v := while.cond.eval(s)
+	if v.flag == ValueBool {
+		for v.valB {
+			while.whileStmt.eval(s)
+		}
+	} else {
+		fmt.Printf("while eval fail")
+	}
+}
+
+func (print Print) eval(s ValState) {
+	print.printStmt.eval(s)
 }
 
 // Evaluator
@@ -93,8 +108,6 @@ func (e Neg) eval(s ValState) Val {
 	return mkUndefined()
 }
 
-// TODO: maybe implement equality between int and bool => 0 und false sind äquivalent und 1 und true sind äquivalent
-// => definiert ist auf den Folien equal durch zwei Expressions beliebigen types
 func (e Equal) eval(s ValState) Val {
 	nb1 := e[0].eval(s)
 	nb2 := e[1].eval(s)

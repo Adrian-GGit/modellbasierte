@@ -63,3 +63,13 @@ func test_less() {
 	ast3 := less(boolean(true), number(3))
 	run(ast3)
 }
+
+func test_assign() {
+	// assign_stmt := assign("x", boolean(false))
+	assign_stmt := Assign{"x", boolean(false)} // assign should be only possible after declare (Decl)
+	runStmt(assign_stmt)
+}
+
+// func test_if_then_else() {
+// 	ifthenelse_stmt = ifthenelse(equal(boolean(true), boolean(true)), assign("x", boolean(true)), assign("x", boolean(false)))
+// }

@@ -62,9 +62,14 @@ type IfThenElse struct {
 	elseStmt Stmt
 }
 
-// TODO: implement while statement
+type While struct {
+	cond      Exp
+	whileStmt Stmt
+}
 
-// TODO: implement print statement
+type Print struct {
+	printStmt Stmt
+}
 
 // Expression cases (incomplete)
 
@@ -90,4 +95,18 @@ func run(e Exp) {
 	fmt.Printf("\n %s", e.pretty())
 	fmt.Printf("\n %s", showVal(e.eval(s)))
 	fmt.Printf("\n %s", showType(e.infer(t)))
+}
+
+func runStmt(stmt Stmt) {
+	s := make(map[string]Val)
+	t := make(map[string]Type)
+	fmt.Printf("\n ******* ")
+	fmt.Printf("\n %s", stmt.pretty())
+	stmt.eval(s)
+	check := stmt.check(t)
+	if check {
+		fmt.Printf("\n Check succeeded")
+	} else {
+		fmt.Printf("\n Check failed")
+	}
 }

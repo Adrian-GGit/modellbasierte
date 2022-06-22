@@ -2,6 +2,62 @@ package main
 
 // Type inferencer/checker
 
+//Statements
+
+func (stmt Seq) check(t TyState) bool {
+	if !stmt[0].check(t) {
+		return false
+	}
+	return stmt[1].check(t)
+}
+
+func (decl Decl) check(t TyState) bool {
+	ty := decl.rhs.infer(t)
+	if ty == TyIllTyped {
+		return false
+	}
+
+	x := (string)(decl.lhs)
+	t[x] = ty
+	return true
+}
+
+func (assign Assign) check(t TyState) bool {
+	x := (string)(assign.lhs)
+	return t[x] == assign.rhs.infer(t)
+}
+
+func (ifthenelse IfThenElse) check(t TyState) bool {
+	ty := ifthenelse.cond.infer(t)
+	if ty == TyIllTyped {
+		return false
+	}
+	if !ifthenelse.thenStmt.check(t) {
+		return false
+	}
+	if !ifthenelse.elseStmt.check(t) {
+		return false
+	}
+	return true
+}
+
+func (while While) check(t TyState) bool {
+	ty := while.cond.infer(t)
+	if ty == TyIllTyped {
+		return false
+	}
+	if !while.whileStmt.check(t) {
+		return false
+	}
+	return true
+}
+
+func (print Print) check(t TyState) bool {
+	return print.printStmt.check(t)
+}
+
+// Expressions
+
 func (x Var) infer(t TyState) Type {
 	y := (string)(x)
 	ty, ok := t[y]
@@ -10,7 +66,6 @@ func (x Var) infer(t TyState) Type {
 	} else {
 		return TyIllTyped // variable does not exist yields illtyped
 	}
-
 }
 
 func (x Bool) infer(t TyState) Type {

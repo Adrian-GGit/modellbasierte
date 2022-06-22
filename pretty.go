@@ -5,8 +5,6 @@ import "strconv"
 /////////////////////////
 // Stmt instances
 
-// pretty print
-
 func (stmt Seq) pretty() string {
 	return stmt[0].pretty() + "; " + stmt[1].pretty()
 }
@@ -15,10 +13,24 @@ func (decl Decl) pretty() string {
 	return decl.lhs + " := " + decl.rhs.pretty()
 }
 
+func (assign Assign) pretty() string {
+	return assign.lhs + " = " + assign.rhs.pretty()
+}
+
+func (ifthenelse IfThenElse) pretty() string {
+	return "if " + ifthenelse.cond.pretty() + " { " + ifthenelse.thenStmt.pretty() + " } else { " + ifthenelse.elseStmt.pretty() + " }"
+}
+
+func (while While) pretty() string {
+	return "while " + while.cond.pretty() + " { " + while.whileStmt.pretty() + " }"
+}
+
+func (print Print) pretty() string {
+	return print.printStmt.pretty()
+}
+
 /////////////////////////
 // Exp instances
-
-// pretty print
 
 func (x Var) pretty() string {
 	return (string)(x)

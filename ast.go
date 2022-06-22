@@ -2,6 +2,34 @@ package main
 
 // Helper functions to build ASTs by hand
 
+//Statements
+
+// func seq(x, y Stmt) {
+// 	return (Seq)([2]Stmt{x, y})
+// }
+
+// func assign(lhs string, rhs Exp) {
+// 	return Assign{lhs, rhs}
+// }
+
+// func decl(lhs string, rhs Exp) {
+// 	return Decl{lhs, rhs}
+// }
+
+func ifthenelse(con Exp, stmtIf Stmt, stmtElse Stmt) Stmt {
+	return IfThenElse{con, stmtIf, stmtElse}
+}
+
+func while(con Exp, whileStmt Stmt) Stmt {
+	return While{con, whileStmt}
+}
+
+func print(printStmt Stmt) Stmt {
+	return Print{printStmt}
+}
+
+// Expressions
+
 func number(x int) Exp {
 	return Num(x)
 }
