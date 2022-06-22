@@ -36,8 +36,9 @@ func (ifthenelse IfThenElse) eval(s ValState) {
 func (while While) eval(s ValState) {
 	v := while.cond.eval(s)
 	if v.flag == ValueBool {
-		for v.valB {
+		if v.valB {
 			while.whileStmt.eval(s)
+			while.eval(s)
 		}
 	} else {
 		fmt.Printf("while eval fail")
@@ -45,6 +46,7 @@ func (while While) eval(s ValState) {
 }
 
 func (print Print) eval(s ValState) {
+	// TODO: soll hier iwas geprinted weren?
 	print.printStmt.eval(s)
 }
 

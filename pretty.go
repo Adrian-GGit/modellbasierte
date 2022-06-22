@@ -18,15 +18,15 @@ func (assign Assign) pretty() string {
 }
 
 func (ifthenelse IfThenElse) pretty() string {
-	return "if " + ifthenelse.cond.pretty() + " { " + ifthenelse.thenStmt.pretty() + " } else { " + ifthenelse.elseStmt.pretty() + " }"
+	return "if " + ifthenelse.cond.pretty() + " {\n\t" + ifthenelse.thenStmt.pretty() + "\n} else {\n\t" + ifthenelse.elseStmt.pretty() + "\n}"
 }
 
 func (while While) pretty() string {
-	return "while " + while.cond.pretty() + " { " + while.whileStmt.pretty() + " }"
+	return "while " + while.cond.pretty() + " {\n\t" + while.whileStmt.pretty() + "\n}"
 }
 
 func (print Print) pretty() string {
-	return print.printStmt.pretty()
+	return "print(" + print.printStmt.pretty() + ")"
 }
 
 /////////////////////////

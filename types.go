@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+)
 
 // Types
 
@@ -45,8 +48,6 @@ type Stmt interface {
 	check(t TyState) bool
 }
 
-// Statement cases (incomplete)
-
 type Seq [2]Stmt
 type Decl struct {
 	lhs string
@@ -71,8 +72,6 @@ type Print struct {
 	printStmt Stmt
 }
 
-// Expression cases (incomplete)
-
 type Bool bool
 type Num int
 type Mult [2]Exp
@@ -88,25 +87,62 @@ type Less [2]Exp
 
 // Examples
 
-func run(e Exp) {
-	s := make(map[string]Val)
-	t := make(map[string]Type)
-	fmt.Printf("\n ******* ")
+func test_expressions(e Exp, expected_val Val, expected_type Type) bool {
+	val_states := make(ValState)
+	type_states := make(TyState)
+	fmt.Printf("\n---------- New EXP test case ----------")
 	fmt.Printf("\n %s", e.pretty())
-	fmt.Printf("\n %s", showVal(e.eval(s)))
-	fmt.Printf("\n %s", showType(e.infer(t)))
+	e.eval(val_states)
+	type_check := e.infer(type_states) == expected_type
+	if type_check {
+		fmt.Printf("\n[*] Typecheck SUCCESS")
+	} else {
+		fmt.Printf("\n[*] Typecheck FAIL")
+	}
+	eval_check := e.eval(val_states) == expected_val
+	if eval_check {
+		fmt.Printf("\n[*] Evalcheck SUCCESS")
+	} else {
+		fmt.Printf("\n[*] Evalcheck FAIL")
+	}
+	if type_check && eval_check {
+		fmt.Printf("\n=> [*] Overall SUCCESS")
+		return true
+	} else {
+		fmt.Printf("\n=> [!] Overall FAIL")
+		return false
+	}
 }
 
-func runStmt(stmt Stmt) {
-	s := make(map[string]Val)
-	t := make(map[string]Type)
-	fmt.Printf("\n ******* ")
+func test_stmt(stmt Stmt, expected_vals ValState, expected_types TyState) bool {
+	val_states := make(ValState)
+	type_states := make(TyState)
+	fmt.Printf("\n---------- New STMT test case ----------")
 	fmt.Printf("\n %s", stmt.pretty())
-	stmt.eval(s)
-	check := stmt.check(t)
-	if check {
-		fmt.Printf("\n Check succeeded")
+	stmt.eval(val_states)
+	type_check := stmt.check(type_states)
+	if type_check {
+		fmt.Printf("\n[*] Typecheck SUCCESS")
 	} else {
-		fmt.Printf("\n Check failed")
+		fmt.Printf("\n[*] Typecheck FAIL")
+	}
+	compare_val_states := reflect.DeepEqual(val_states, expected_vals)
+	compare_type_states := reflect.DeepEqual(type_states, expected_types)
+	if compare_val_states {
+		fmt.Printf("\n[*] Eval SUCCESS")
+	} else {
+		fmt.Printf("\n[!] Eval FAIL")
+	}
+	if compare_type_states {
+		fmt.Printf("\n[*] Type SUCCESS")
+	} else {
+		fmt.Printf("\n[!] Type FAIL")
+	}
+	if type_check && compare_val_states && compare_type_states {
+		fmt.Printf("\n=> [*] Overall SUCCESS")
+		return true
+	} else {
+		fmt.Printf("\n=> [!] Overall FAIL")
+		return false
 	}
 }

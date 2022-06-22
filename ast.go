@@ -4,17 +4,17 @@ package main
 
 //Statements
 
-// func seq(x, y Stmt) {
-// 	return (Seq)([2]Stmt{x, y})
-// }
+func seq(x, y Stmt) Stmt {
+	return (Seq)([2]Stmt{x, y})
+}
 
-// func assign(lhs string, rhs Exp) {
-// 	return Assign{lhs, rhs}
-// }
+func assign(lhs string, rhs Exp) Stmt {
+	return Assign{lhs, rhs}
+}
 
-// func decl(lhs string, rhs Exp) {
-// 	return Decl{lhs, rhs}
-// }
+func decl(lhs string, rhs Exp) Stmt {
+	return Decl{lhs, rhs}
+}
 
 func ifthenelse(con Exp, stmtIf Stmt, stmtElse Stmt) Stmt {
 	return IfThenElse{con, stmtIf, stmtElse}
