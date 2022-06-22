@@ -26,7 +26,7 @@ func (while While) pretty() string {
 }
 
 func (print Print) pretty() string {
-	return "print(" + print.printStmt.pretty() + ")"
+	return "print(" + print.printExp.pretty() + ")"
 }
 
 /////////////////////////

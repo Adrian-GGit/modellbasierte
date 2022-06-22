@@ -24,8 +24,8 @@ func while(con Exp, whileStmt Stmt) Stmt {
 	return While{con, whileStmt}
 }
 
-func print(printStmt Stmt) Stmt {
-	return Print{printStmt}
+func print(printExp Exp) Stmt {
+	return Print{printExp}
 }
 
 // Expressions

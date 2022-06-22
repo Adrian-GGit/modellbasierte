@@ -69,7 +69,7 @@ type While struct {
 }
 
 type Print struct {
-	printStmt Stmt
+	printExp Exp
 }
 
 type Bool bool

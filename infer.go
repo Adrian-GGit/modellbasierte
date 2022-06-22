@@ -53,7 +53,11 @@ func (while While) check(t TyState) bool {
 }
 
 func (print Print) check(t TyState) bool {
-	return print.printStmt.check(t)
+	if print.printExp.infer(t) != TyIllTyped {
+		return true
+	} else {
+		return false
+	}
 }
 
 // Expressions

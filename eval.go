@@ -50,8 +50,14 @@ func (while While) eval(s ValState) {
 }
 
 func (print Print) eval(s ValState) {
-	// TODO: soll hier iwas geprinted weren?
-	print.printStmt.eval(s)
+	v := print.printExp.eval(s)
+	if v.flag == ValueBool {
+		fmt.Printf("\n%t", v.valB)
+	} else if v.flag == ValueInt {
+		fmt.Printf("\n%d", v.valI)
+	} else if v.flag == Undefined {
+		fmt.Printf("\nprint eval fail")
+	}
 }
 
 // Evaluator
