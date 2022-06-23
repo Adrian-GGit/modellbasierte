@@ -14,9 +14,14 @@ func test_all() {
 	overall_success = overall_success && test_negation()
 	overall_success = overall_success && test_equal()
 	overall_success = overall_success && test_less()
+	overall_success = overall_success && test_var()
 
 	overall_success = overall_success && test_decl()
 	overall_success = overall_success && test_assign()
+	overall_success = overall_success && test_ifthenelse()
+	overall_success = overall_success && test_while()
+	overall_success = overall_success && test_print()
+	// overall_success = overall_success && test_seq()
 
 	if overall_success {
 		fmt.Printf("\n=====> [*] Overall overall test SUCCESS")
@@ -204,6 +209,19 @@ func test_less() bool {
 	return overall_success
 }
 
+func test_var() bool {
+	fmt.Printf("\n##### ---------- New test ---------- #####")
+	overall_success := true
+	ast := variable("x")
+	overall_success = overall_success && test_expressions(ast, Val{Undefined, 0, false}, TyIllTyped)
+	if overall_success {
+		fmt.Printf("\n===> [*] Overall test SUCCESS")
+	} else {
+		fmt.Printf("\n===> [*] Overall test FAIL")
+	}
+	return overall_success
+}
+
 func test_decl() bool {
 	fmt.Printf("\n##### ---------- New test ---------- #####")
 	overall_success := true
@@ -235,3 +253,76 @@ func test_assign() bool {
 	}
 	return overall_success
 }
+
+func test_ifthenelse() bool {
+	fmt.Printf("\n##### ---------- New test ---------- #####")
+	overall_success := true
+	assign_stmt := seq(decl("x", boolean(true)), ifthenelse(equal(variable("x"), boolean(true)), assign("x", boolean(true)), assign("x", boolean(false))))
+	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueBool, 0, true}}, TyState{"x": TyBool}, false)
+	assign_stmt = seq(decl("x", boolean(true)), ifthenelse(equal(variable("x"), boolean(false)), assign("x", boolean(true)), assign("x", boolean(false))))
+	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueBool, 0, false}}, TyState{"x": TyBool}, false)
+	assign_stmt = seq(decl("x", number(3)), ifthenelse(less(variable("x"), number(5)), decl("y", boolean(true)), decl("y", boolean(false))))
+	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueInt, 3, false}, "y": Val{ValueBool, 0, true}}, TyState{"x": TyInt, "y": TyBool}, false)
+	assign_stmt = seq(decl("x", number(3)), ifthenelse(neg(variable("x")), decl("y", boolean(true)), decl("y", boolean(false))))
+	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueInt, 3, false}}, TyState{"x": TyInt}, true)
+	assign_stmt = seq(decl("x", number(3)), ifthenelse(less(variable("x"), number(5)),
+		ifthenelse(less(variable("x"), number(3)), assign("x", number(100)), assign("x", number(1000))),
+		decl("y", boolean(false))))
+	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueInt, 1000, false}}, TyState{"x": TyInt, "y": TyBool}, false)
+
+	if overall_success {
+		fmt.Printf("\n===> [*] Overall test SUCCESS")
+	} else {
+		fmt.Printf("\n===> [*] Overall test FAIL")
+	}
+	return overall_success
+}
+
+func test_while() bool {
+	fmt.Printf("\n##### ---------- New test ---------- #####")
+	overall_success := true
+	assign_stmt := seq(decl("x", boolean(true)), while(equal(variable("x"), boolean(true)), assign("x", boolean(false))))
+	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueBool, 0, false}}, TyState{"x": TyBool}, false)
+	assign_stmt = seq(decl("x", number(1)), while(neg(equal(variable("x"), number(10))), assign("x", plus(variable("x"), number(1)))))
+	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueInt, 10, false}}, TyState{"x": TyInt}, false)
+	assign_stmt = seq(decl("y", number(1)), seq(decl("x", number(1)), while(neg(equal(variable("x"), number(10))),
+		seq(assign("y", mult(variable("x"), variable("y"))), assign("x", plus(variable("x"), number(1)))))))
+	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueInt, 10, false}, "y": Val{ValueInt, 362880, false}}, TyState{"x": TyInt, "y": TyInt}, false)
+	assign_stmt = seq(decl("x", number(1)), while(neg(variable("x")), assign("x", boolean(false))))
+	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueInt, 1, false}}, TyState{"x": TyInt}, true)
+	if overall_success {
+		fmt.Printf("\n===> [*] Overall test SUCCESS")
+	} else {
+		fmt.Printf("\n===> [*] Overall test FAIL")
+	}
+	return overall_success
+}
+
+func test_print() bool {
+	fmt.Printf("\n##### ---------- New test ---------- #####")
+	overall_success := true
+	assign_stmt := seq(decl("x", boolean(true)), print(variable("x")))
+	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueBool, 0, true}}, TyState{"x": TyBool}, false)
+	assign_stmt = seq(decl("x", number(1)), print(less(variable("x"), number(5))))
+	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueInt, 1, false}}, TyState{"x": TyInt}, false)
+	assign_stmt = seq(decl("x", number(1)), print(neg(variable("x"))))
+	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueInt, 1, false}}, TyState{"x": TyInt}, true)
+	if overall_success {
+		fmt.Printf("\n===> [*] Overall test SUCCESS")
+	} else {
+		fmt.Printf("\n===> [*] Overall test FAIL")
+	}
+	return overall_success
+}
+
+// TODO: seq - ist schon oben eigentlich genug getestet
+// func test_seq() bool {
+// 	fmt.Printf("\n##### ---------- New test ---------- #####")
+// 	overall_success := true
+// 	if overall_success {
+// 		fmt.Printf("\n===> [*] Overall test SUCCESS")
+// 	} else {
+// 		fmt.Printf("\n===> [*] Overall test FAIL")
+// 	}
+// 	return overall_success
+// }

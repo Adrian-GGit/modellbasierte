@@ -32,6 +32,8 @@ func (assign Assign) check(t TyState) bool {
 	}
 }
 
+// have to check both thenstmt and elsestmt because only got tystate map => to only check necessary one valstate map is needed
+// but IMP also defined it like that...
 func (ifthenelse IfThenElse) check(t TyState) bool {
 	ty := ifthenelse.cond.infer(t)
 	if ty != TyBool {
