@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+//Statements
+
 func (stmt Seq) eval(s ValState) {
 	stmt[0].eval(s)
 	stmt[1].eval(s)
@@ -60,7 +62,7 @@ func (print Print) eval(s ValState) {
 	}
 }
 
-// Evaluator
+// Expressions
 
 func (x Var) eval(s ValState) Val {
 	y := (string)(x)

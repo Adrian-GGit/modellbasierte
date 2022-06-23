@@ -1,7 +1,5 @@
 package main
 
-// Values
-
 type Kind int
 
 const (

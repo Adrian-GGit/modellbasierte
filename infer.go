@@ -2,7 +2,7 @@ package main
 
 // Type inferencer/checker
 
-//Statements
+// Statements
 
 func (stmt Seq) check(t TyState) bool {
 	if !stmt[0].check(t) {
@@ -73,7 +73,7 @@ func (x Var) infer(t TyState) Type {
 	if ok {
 		return ty
 	} else {
-		return TyIllTyped // variable does not exist yields illtyped
+		return TyIllTyped
 	}
 }
 

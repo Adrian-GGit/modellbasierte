@@ -2,8 +2,7 @@ package main
 
 import "strconv"
 
-/////////////////////////
-// Stmt instances
+// Statements
 
 func (stmt Seq) pretty() string {
 	return stmt[0].pretty() + "\n" + stmt[1].pretty()
@@ -29,8 +28,7 @@ func (print Print) pretty() string {
 	return "print(" + print.printExp.pretty() + ")"
 }
 
-/////////////////////////
-// Exp instances
+// Expressions
 
 func (x Var) pretty() string {
 	return (string)(x)
