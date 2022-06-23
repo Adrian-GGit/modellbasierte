@@ -29,7 +29,4 @@ Expressions to implement:
 
 -----------------------------------------
 Current TODOs:
-- Add tests for
-    - ifthenelse
-    - while
-    - print
+- define highlights => new file for presentation
