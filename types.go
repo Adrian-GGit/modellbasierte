@@ -91,7 +91,7 @@ func test_expressions(e Exp, expected_val Val, expected_type Type) bool {
 	val_states := make(ValState)
 	type_states := make(TyState)
 	fmt.Printf("\n---------- New EXP test case ----------")
-	fmt.Printf("\n %s", e.pretty())
+	fmt.Printf("\n%s", e.pretty())
 	e.eval(val_states)
 	type_check := e.infer(type_states) == expected_type
 	if type_check {
@@ -118,7 +118,7 @@ func test_stmt(stmt Stmt, expected_vals ValState, expected_types TyState, allow_
 	val_states := make(ValState)
 	type_states := make(TyState)
 	fmt.Printf("\n---------- New STMT test case ----------")
-	fmt.Printf("\n %s", stmt.pretty())
+	fmt.Printf("\n%s", stmt.pretty())
 	stmt.eval(val_states)
 	type_check := stmt.check(type_states)
 	if type_check {

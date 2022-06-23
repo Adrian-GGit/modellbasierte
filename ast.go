@@ -30,6 +30,10 @@ func print(printExp Exp) Stmt {
 
 // Expressions
 
+func variable(x string) Exp {
+	return Var(x)
+}
+
 func number(x int) Exp {
 	return Num(x)
 }

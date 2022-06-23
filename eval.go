@@ -62,6 +62,16 @@ func (print Print) eval(s ValState) {
 
 // Evaluator
 
+func (x Var) eval(s ValState) Val {
+	y := (string)(x)
+	val, ok := s[y]
+	if ok {
+		return val
+	} else {
+		return mkUndefined()
+	}
+}
+
 func (x Bool) eval(s ValState) Val {
 	return mkBool((bool)(x))
 }

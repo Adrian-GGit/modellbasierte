@@ -6,7 +6,7 @@ import "strconv"
 // Stmt instances
 
 func (stmt Seq) pretty() string {
-	return stmt[0].pretty() + "; " + stmt[1].pretty()
+	return stmt[0].pretty() + "\n" + stmt[1].pretty()
 }
 
 func (decl Decl) pretty() string {
@@ -54,7 +54,7 @@ func (e Mult) pretty() string {
 	var x string
 	x = "("
 	x += e[0].pretty()
-	x += "*"
+	x += " * "
 	x += e[1].pretty()
 	x += ")"
 
@@ -66,7 +66,7 @@ func (e Plus) pretty() string {
 	var x string
 	x = "("
 	x += e[0].pretty()
-	x += "+"
+	x += " + "
 	x += e[1].pretty()
 	x += ")"
 
@@ -78,7 +78,7 @@ func (e And) pretty() string {
 	var x string
 	x = "("
 	x += e[0].pretty()
-	x += "&&"
+	x += " && "
 	x += e[1].pretty()
 	x += ")"
 
@@ -90,7 +90,7 @@ func (e Or) pretty() string {
 	var x string
 	x = "("
 	x += e[0].pretty()
-	x += "||"
+	x += " || "
 	x += e[1].pretty()
 	x += ")"
 
@@ -113,7 +113,7 @@ func (e Equal) pretty() string {
 	var x string
 	x = "("
 	x += e[0].pretty()
-	x += "=="
+	x += " == "
 	x += e[1].pretty()
 	x += ")"
 
@@ -125,7 +125,7 @@ func (e Less) pretty() string {
 	var x string
 	x = "("
 	x += e[0].pretty()
-	x += "<"
+	x += " < "
 	x += e[1].pretty()
 	x += ")"
 

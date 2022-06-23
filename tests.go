@@ -23,6 +23,7 @@ func test_all() {
 }
 
 func test_plus_mult() bool {
+	fmt.Printf("\n##### ---------- New test ---------- #####")
 	overall_success := true
 	ast := plus(mult(number(1), number(2)), number(0))
 	overall_success = overall_success && test_expressions(ast, Val{ValueInt, 2, false}, TyInt)
@@ -35,6 +36,7 @@ func test_plus_mult() bool {
 }
 
 func test_and() bool {
+	fmt.Printf("\n##### ---------- New test ---------- #####")
 	overall_success := true
 	ast := and(boolean(false), number(0))
 	overall_success = overall_success && test_expressions(ast, Val{ValueBool, 0, false}, TyIllTyped)
@@ -55,6 +57,7 @@ func test_and() bool {
 }
 
 func test_or() bool {
+	fmt.Printf("\n##### ---------- New test ---------- #####")
 	overall_success := true
 	ast := or(boolean(false), number(0))
 	overall_success = overall_success && test_expressions(ast, Val{Undefined, 0, false}, TyIllTyped)
@@ -75,6 +78,7 @@ func test_or() bool {
 }
 
 func test_negation() bool {
+	fmt.Printf("\n##### ---------- New test ---------- #####")
 	overall_success := true
 	ast := neg(boolean(true))
 	overall_success = overall_success && test_expressions(ast, Val{ValueBool, 0, false}, TyBool)
@@ -91,6 +95,7 @@ func test_negation() bool {
 }
 
 func test_equal() bool {
+	fmt.Printf("\n##### ---------- New test ---------- #####")
 	overall_success := true
 	ast := equal(boolean(true), boolean(false))
 	overall_success = overall_success && test_expressions(ast, Val{ValueBool, 0, false}, TyBool)
@@ -113,6 +118,7 @@ func test_equal() bool {
 }
 
 func test_less() bool {
+	fmt.Printf("\n##### ---------- New test ---------- #####")
 	overall_success := true
 	ast := less(number(3), number(5))
 	overall_success = overall_success && test_expressions(ast, Val{ValueBool, 0, true}, TyBool)
@@ -129,6 +135,7 @@ func test_less() bool {
 }
 
 func test_decl() bool {
+	fmt.Printf("\n##### ---------- New test ---------- #####")
 	overall_success := true
 	assign_stmt := decl("x", boolean(false))
 	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueBool, 0, false}}, TyState{"x": TyBool}, false)
@@ -143,6 +150,7 @@ func test_decl() bool {
 }
 
 func test_assign() bool {
+	fmt.Printf("\n##### ---------- New test ---------- #####")
 	overall_success := true
 	assign_stmt := seq(decl("x", boolean(false)), assign("x", boolean(true)))
 	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueBool, 0, true}}, TyState{"x": TyBool}, false)

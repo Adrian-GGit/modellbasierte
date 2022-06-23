@@ -24,12 +24,17 @@ func (decl Decl) check(t TyState) bool {
 
 func (assign Assign) check(t TyState) bool {
 	x := (string)(assign.lhs)
-	return t[x] == assign.rhs.infer(t)
+	y := assign.rhs.infer(t)
+	if t[x] != TyIllTyped && y != TyIllTyped {
+		return t[x] == assign.rhs.infer(t)
+	} else {
+		return false
+	}
 }
 
 func (ifthenelse IfThenElse) check(t TyState) bool {
 	ty := ifthenelse.cond.infer(t)
-	if ty == TyIllTyped {
+	if ty != TyBool {
 		return false
 	}
 	if !ifthenelse.thenStmt.check(t) {
@@ -43,7 +48,7 @@ func (ifthenelse IfThenElse) check(t TyState) bool {
 
 func (while While) check(t TyState) bool {
 	ty := while.cond.infer(t)
-	if ty == TyIllTyped {
+	if ty != TyBool {
 		return false
 	}
 	if !while.whileStmt.check(t) {
