@@ -2,6 +2,8 @@
 go run .
 
 # Documentation
+The [IMP Project](https://sulzmann.github.io/ModelBasedSW/imp.html#(1)) as implemented for the course "Modellbasierte Softwareentwicklung". The task was to implement an evualator and a typechecker for the project. Additionally tests were required to show that the implementation works as intended.
+
 ## ast.go
 Helper functions to build expressions and statements.
 Example:
@@ -61,3 +63,17 @@ func (ifthenelse IfThenElse) pretty() string {
 }
 ```
 This function takes an IfThenElse statement as an argument and returns a string using the familiar formatting, known by any programmer.
+
+## tests.go
+Numerous tests to check various expressions and statements.
+Example:
+```
+func test_ifthenelse() bool {
+	fmt.Printf("\n##### ---------- New test ---------- #####")
+	overall_success := true
+	assign_stmt := seq(decl("x", boolean(true)), ifthenelse(equal(variable("x"), boolean(true)), assign("x", boolean(true)), assign("x", boolean(false))))
+	overall_success = overall_success && test_stmt(assign_stmt, ValState{"x": Val{ValueBool, 0, true}}, TyState{"x": TyBool}, false)
+	....
+}
+```
+A snippet from the tests for IfThenElse statements. Since we are executing multiple tests in this function we track the overall success in a variable. Then the AST for an IfThenElse statement is built and afterwards passed to the global test function for statements alongside the exptected maps for value state and type state. The final argument of the test function is a boolean which indicates wheter or not the type check is allowed to fail. The test function returns boolean true if the test succeeds and boolean false if not. This return value is then ANDed with the value of the current overall success variable.
