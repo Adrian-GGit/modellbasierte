@@ -10,7 +10,7 @@ func ifthenelse(con Exp, stmtIf Stmt, stmtElse Stmt) Stmt {
 	return IfThenElse{con, stmtIf, stmtElse}
 }
 ```
-Build IfThenElse struct with given parameters. IfThenElse receives a condition expression that ought to be checked and two statements - for if and else branch.
+Build IfThenElse struct with given parameters. IfThenElse receives a condition expression that ought to be checked and two statements - for if and else branch respectively.
 
 ## eval.go
 Collection of functions which execute a certain expression or statement.
@@ -30,7 +30,7 @@ func (ifthenelse IfThenElse) eval(s ValState) {
 	}
 }
 ```
-The parameter is an IfThenElse statement, consisting of a condition expression and two statements. The condition has to be evaluated aswell to receive the information about the flag of the expression. If the expression is type of boolean then the IfThenElse Statement can be evaluated. In case the expression is true the thenStmt is evaluated, otherwise the elseStmt.
+The parameter is an IfThenElse statement, consisting of a condition expression and two statements. The condition has to be evaluated first to receive the information about the flag of the expression. Based on this flag either the thenStmt or the elseStmt is evaluated.
 
 ## infer.go
 Collection of functions which infer a certain expression or statement.
