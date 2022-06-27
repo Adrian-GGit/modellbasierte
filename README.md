@@ -36,5 +36,28 @@ The parameter is an IfThenElse statement, consisting of a condition expression a
 Collection of functions which infer a certain expression or statement.
 Example:
 ```
-
+func (ifthenelse IfThenElse) check(t TyState) bool {
+	ty := ifthenelse.cond.infer(t)
+	if ty != TyBool {
+		return false
+	}
+	if !ifthenelse.thenStmt.check(t) {
+		return false
+	}
+	if !ifthenelse.elseStmt.check(t) {
+		return false
+	}
+	return true
+}
 ```
+A function which takes an IfThenElse statement as its only argument and returns a boolean indicating whether or not the the passed statement is of the expected type. First the statement's condition expression is infered. If this fails the function immediately returns false. Otherwise the thenStmt and elseStmt are infered respectively. In case all checks succeed the function returns true.
+
+## pretty.go
+This file consists of functions to building a human readable string for an expression or statement. 
+Example:
+```
+func (ifthenelse IfThenElse) pretty() string {
+	return "if " + ifthenelse.cond.pretty() + " {\n\t" + ifthenelse.thenStmt.pretty() + "\n} else {\n\t" + ifthenelse.elseStmt.pretty() + "\n}"
+}
+```
+This function takes an IfThenElse statement as an argument and returns a string using the familiar formatting, known by any programmer.
