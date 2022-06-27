@@ -33,3 +33,8 @@ func (ifthenelse IfThenElse) eval(s ValState) {
 The parameter is an IfThenElse statement, consisting of a condition expression and two statements. The condition has to be evaluated aswell to receive the information about the flag of the expression. If the expression is type of boolean then the IfThenElse Statement can be evaluated. In case the expression is true the thenStmt is evaluated, otherwise the elseStmt.
 
 ## infer.go
+Collection of functions which infer a certain expression or statement.
+Example:
+```
+
+```
